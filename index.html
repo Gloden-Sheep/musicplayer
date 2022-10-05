@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>music</title>
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div id="music">
+		<div id="container">
+			<h3 id="musicName">Prague Symphony Orchestra,Maxim Shostakovich - Symphony No. 1 in F Minor, Op. 10：I. Allegretto</h3>
+			<img src="image/肖斯塔科维奇交响曲.jpg" id="musicImg">
+			<audio src="./music/Prague Symphony Orchestra,Maxim Shostakovich - Symphony No. 1 in F Minor, Op. 10：I. Allegretto.mp3" controls id="audio"></audio>
+			<div class="btn">
+				<button id="play">play</button>
+				<button id="pause">pause</button>
+				<button id="prev">prev</button>
+				<button id="next">next</button>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var play = document.getElementById('play'),
+			pause = document.getElementById('pause'),
+			prev = document.getElementById('prev'),
+			next = document.getElementById('next'),
+			musicName = document.getElementById('musicName');
+			/* musicImg = document.getElementById('musicImg'), */
+			/* bgImage = document.getElementById('music'); */
+
+		var music = new Array();
+		music = ['Prague Symphony Orchestra,Maxim Shostakovich - Symphony No. 1 in F Minor, Op. 10：I. Allegretto','Prague Symphony Orchestra,Maxim Shostakovich - Symphony No. 1 in F Minor, Op. 10：II. Allegro','Prague Symphony Orchestra,Maxim Shostakovich - Symphony No. 1 in F Minor, Op. 10：II. Allegro','Prague Symphony Orchestra,Maxim Shostakovich - Symphony No. 1 in F Minor, Op. 10：III. Lento','Prague Symphony Orchestra,Maxim Shostakovich - Symphony No. 1 in F Minor, Op. 10：IV. Allegro molto'];
+		var len = music.length;
+		var num = 0;
+
+		// 播放
+		play.onclick = function(){
+			if(audio.paused){
+				audio.play();
+			}
+		}
+
+		// 暂停
+		pause.onclick = function(){
+			if(audio.played){
+				audio.pause();
+			}
+		}
+
+		// 上一首
+		prev.onclick = function(){
+			num = (num + len - 1) % len;
+			audio.src = './music/' + music[num] + '.mp3';
+			musicName.innerHTML = music[num];
+			/* bgImage.style.backgroundImage = 'url(./image/' + music[num] + '.jpg)'; */
+			/* musicImg.src = './image/' + music[num] + '.jpg'; */
+			audio.play();
+		}
+
+		// 下一首
+		next.onclick = function(){
+			num = (num + 1) % len;
+			audio.src = './music/' + music[num] + '.mp3';
+			musicName.innerHTML = music[num];
+			/* bgImage.style.backgroundImage = 'url(./image/' + music[num] + '.jpg)'; */
+			/* musicImg.src = './image/' + music[num] + '.jpg'; */
+			audio.play();
+		}
+
+		// 自动切换下一首
+		audio.addEventListener('ended',function(){
+			next.onclick();
+		},false);
+	</script>
+</body>
+</html>
